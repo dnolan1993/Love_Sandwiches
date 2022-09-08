@@ -26,7 +26,6 @@ def get_sales_data():
         print("Example: 10,20,30,40,50,60\n")
 
         data_str = input("Enter your data here:\n")
-        
         sales_data = data_str.split(",")
         validate_data(sales_data)
 
@@ -48,11 +47,10 @@ def validate_data(values):
         if len(values) != 6:
             raise ValueError(
                 f"Exactly 6 values required, you provided {len(values)}"
-            ) 
+            )
     except ValueError as e: 
         print(f"Invalid date: {e}, please try again.\n")
         return False
-    
     return True
 
 
@@ -89,6 +87,7 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated successfully.\n")
 
+
 def calculate_surplus_data(sales_row):
     """
     Compare sales with stock and calculate the surplus for each item type.
@@ -100,27 +99,24 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-    
     return surplus_data
 
 
 def get_last_5_entries_sales():
     """
-    Collects collumns of data from sales worksheet, collecting 
+    Collects collumns of data from sales worksheet, collecting
     the last 5 entries for each sandwich and returns the data
     as a list of lists.
     """
     sales = SHEET.worksheet("sales")
     columns = []
-    for ind in range(1,7):
+    for ind in range(1, 7):
         column = sales.col_values(ind)
         columns.append(column[-5:])
-    
     return columns
 
 
@@ -130,7 +126,6 @@ def calculate_stock_data(data):
     """
     print("Calculating stock data...\n")
     new_stock_data = []
-    
     for column in data:
         int_column = [int(num) for num in column]
         average = sum(int_column) / len(int_column)
@@ -155,4 +150,5 @@ def main():
 
 
 print("Welcome to Love Sandwiches Data Automation")
+
 main()
